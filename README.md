@@ -18,7 +18,10 @@
 
 ## Estefania
 
--
+- model : PersonajeFisico.java
+- model : Guerrero.java
+- model : Arquero.java
+- interfaces : Defendible. java
 
 ## Izan 
 
