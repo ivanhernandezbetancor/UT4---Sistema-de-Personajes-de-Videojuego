@@ -9,6 +9,7 @@ public abstract class PersonajeFisico extends Personaje {
     private boolean cargando;
 
     // Constructor.
+    
     public PersonajeFisico(String nombre, int nivel, int saludMaxima, int fuerza, int armadura) {
         super(nombre, nivel, saludMaxima);
 
