@@ -6,7 +6,6 @@ public class Arquero extends PersonajeFisico {
     private int precision;
 
     // Constructor
-
     public Arquero(String nombre, int nivel) {
         super(nombre, nivel, 90, 14, 8); // saludMaxima, fuerza y armadura
         this.flechas = 30;
@@ -15,7 +14,6 @@ public class Arquero extends PersonajeFisico {
 
     // Cada arquero tiene su forma de atacar
     // Si tiene flechas dispara, sino ataca cuerpo a cuerpo
-
     @Override
     public void atacar(Personaje objetivo) {
 
@@ -35,7 +33,6 @@ public class Arquero extends PersonajeFisico {
     }
 
     // Ataque especial (dispara varias flechas a la vez)
-
     public void disparoRapido(Personaje objetivo) {
 
         if (flechas >= 3) {
@@ -54,7 +51,6 @@ public class Arquero extends PersonajeFisico {
     }
 
     // Getters
-
     public int getFlechas() {
         return flechas;
     }
