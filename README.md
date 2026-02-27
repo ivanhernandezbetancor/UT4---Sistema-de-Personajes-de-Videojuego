@@ -29,7 +29,10 @@
 
 ## Miguel
 
--
+-model : Paladin.java
+-model : Hechicero.java
+-model : Juego.java
+-util : Excepciones.java
 
 ## Diagrama simple de la jerarquía en Lista 
 
