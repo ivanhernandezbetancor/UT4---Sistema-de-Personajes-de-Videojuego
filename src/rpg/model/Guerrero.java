@@ -8,7 +8,6 @@ public class Guerrero extends PersonajeFisico implements Defendible{
     private int rabia;
 
     // Constructor
-
     public Guerrero(String nombre, int nivel) {
         super(nombre, nivel, 120, 18, 15); // saludMaxima, fuerza y armadura
         this.escudo = 20;
@@ -17,7 +16,6 @@ public class Guerrero extends PersonajeFisico implements Defendible{
 
     // Cada guerrero tiene su propia forma de atacar
     // Usa golpe básico y además acumula rabia
-
     @Override
     public void atacar(Personaje objetivo) {
         cargarAtaque();
@@ -33,7 +31,6 @@ public class Guerrero extends PersonajeFisico implements Defendible{
     }
 
     // Ataque especial que solo se puede usar si tiene suficiente rabia
-
     public void golpeFurioso(Personaje objetivo) {
         if (rabia >= 50) {
             int danio = getFuerza() * 3;
@@ -48,7 +45,6 @@ public class Guerrero extends PersonajeFisico implements Defendible{
     }
 
     // Implementación de la interfaz Defendible
-
     @Override
     public void defender() {
         System.out.println(getNombre() + " levanta su escudo para defenderse");
@@ -69,7 +65,6 @@ public class Guerrero extends PersonajeFisico implements Defendible{
     }
 
     // Getters
-
     public int getEscudo() {
         return escudo;
     }
