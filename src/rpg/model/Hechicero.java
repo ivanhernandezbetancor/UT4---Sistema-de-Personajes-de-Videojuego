@@ -2,86 +2,106 @@ package rpg.model;
 
 import rpg.interfaces.Magico;
 
-// Hechicero hereda de PersonajeMagico (subclase abstracta intermedia)
-// e implementa Magico (capacidad de lanzar hechizos)
+// Hechicero es una clase concreta que:
+// - Hereda de PersonajeMagico (subclase abstracta intermedia de Personaje)
+// - Implementa la interfaz Magico (capacidad de lanzar hechizos)
+// Esto demuestra herencia + interfaces al mismo tiempo
 public class Hechicero extends PersonajeMagico implements Magico {
 
-    // Atributos propios del Hechicero (mínimo 2 requeridos)
-    private int mana;
-    private int manaMaximo;
+    // Atributos propios del Hechicero (encapsulados como private)
+    // poderOscuro: daño extra que se suma a todos sus ataques y hechizos
+    // cargasUltimas: número de veces que puede potenciar su poder oscuro
+    private int poderOscuro;
+    private int cargasUltimas;
 
-    // Constructor
+    // Constructor: recibe los datos básicos y los pasa a PersonajeMagico con super()
+    // El 20 es la regeneración de mana base que recibe PersonajeMagico
+    // Se inicializan los atributos propios del Hechicero
     public Hechicero(String nombre, int nivel, int saludMaxima, int manaMaximo) {
-        super(nombre, nivel, saludMaxima);
-        this.manaMaximo = manaMaximo;
-        this.mana = manaMaximo;
+        super(nombre, nivel, saludMaxima, manaMaximo, 20);
+        this.poderOscuro = 20;
+        this.cargasUltimas = 3;
     }
 
-    // Override obligatorio de atacar(Personaje objetivo)
-    // Polimorfismo: misma llamada → comportamiento distinto al de otros personajes
+    // Override obligatorio del método abstracto atacar() de Personaje
+    // Polimorfismo: misma llamada atacar() → comportamiento distinto según el tipo real del objeto
+    // El Hechicero gasta mana para lanzar un rayo arcano
+    // Si no tiene mana suficiente, informa y no ataca
     @Override
     public void atacar(Personaje objetivo) {
         int costeMana = 10;
-        if (mana >= costeMana) {
-            int danio = 15 + (getNivel() * 4);
-            mana -= costeMana;
+        if (getMana() >= costeMana) {
+            // El daño escala con el nivel y se suma el poder oscuro acumulado
+            int danio = 15 + (getNivel() * 4) + poderOscuro;
+            gastarMana(costeMana); // Método heredado de PersonajeMagico
             System.out.println(getNombre() + " lanza un rayo arcano a "
-                    + objetivo.getNombre() + " causando " + danio + " de daño. "
-                    + "[Mana restante: " + mana + "]");
-            objetivo.recibirDanio(danio);
+                    + objetivo.getNombre() + " causando " + danio + " de daño.");
+            objetivo.recibirDanio(danio); // Método heredado de Personaje
         } else {
-            System.out.println(getNombre() + " no tiene suficiente mana para atacar.");
+            System.out.println(getNombre() + " no tiene suficiente mana.");
         }
     }
 
-    // Implementación de la interfaz Magico
+    // Override del método lanzarHechizo() definido en la interfaz Magico
+    // Hechizo más potente que el ataque básico pero con mayor coste de mana
+    // También suma el poder oscuro al daño total
     @Override
     public void lanzarHechizo(Personaje objetivo) {
         int costeMana = 25;
-        if (mana >= costeMana) {
-            int danio = 40 + (getNivel() * 6);
-            mana -= costeMana;
+        if (getMana() >= costeMana) {
+            // Daño base mayor que atacar(), escala más con el nivel
+            int danio = 40 + (getNivel() * 6) + poderOscuro;
+            gastarMana(costeMana);
             System.out.println(getNombre() + " lanza Bola de Fuego sobre "
-                    + objetivo.getNombre() + " causando " + danio + " de daño masivo. "
-                    + "[Mana restante: " + mana + "]");
+                    + objetivo.getNombre() + " causando " + danio + " de daño.");
             objetivo.recibirDanio(danio);
         } else {
-            System.out.println(getNombre() + " no tiene suficiente mana para lanzar el hechizo.");
+            System.out.println(getNombre() + " no tiene mana suficiente.");
         }
     }
 
-    // Método propio adicional: invocar familiar
+    // Override del método getNombreHechizo() de la interfaz Magico
+    // Devuelve el nombre del hechizo característico de esta clase
+    @Override
+    public String getNombreHechizo() {
+        return "Bola de Fuego";
+    }
+
+    // Método propio del Hechicero: invoca un familiar arcano
+    // Gasta mana. Si no hay suficiente, informa y no hace nada
     public void invocar() {
         int costeMana = 30;
-        if (mana >= costeMana) {
-            mana -= costeMana;
-            System.out.println(getNombre() + " invoca un familiar arcano para ayudarle en combate. "
-                    + "[Mana restante: " + mana + "]");
+        if (getMana() >= costeMana) {
+            gastarMana(costeMana);
+            System.out.println(getNombre() + " invoca un familiar arcano.");
         } else {
-            System.out.println(getNombre() + " no tiene suficiente mana para invocar.");
+            System.out.println(getNombre() + " no tiene mana para invocar.");
         }
     }
 
-    // Getters y Setters de atributos propios
-    public int getMana() {
-        return mana;
+    // Método propio del Hechicero: aumenta el poder oscuro usando cargas limitadas
+    // Cada uso consume una carga y suma 10 al poderOscuro (que incrementa el daño)
+    // Solo funciona si quedan cargas disponibles
+    public void potenciarPoder() {
+        if (cargasUltimas > 0) {
+            poderOscuro += 10;
+            cargasUltimas--;
+            System.out.println(getNombre() + " potencia su poder.");
+        } else {
+            System.out.println(getNombre() + " no tiene cargas ultimas.");
+        }
     }
 
-    public void setMana(int mana) {
-        this.mana = Math.max(0, Math.min(mana, manaMaximo));
-    }
+    // Getters de los atributos propios
+    // No hay setters porque poderOscuro y cargasUltimas solo se modifican
+    // desde dentro de la clase, a través de potenciarPoder()
+    public int getPoderOscuro() { return poderOscuro; }
+    public int getCargasUltimas() { return cargasUltimas; }
 
-    public int getManaMaximo() {
-        return manaMaximo;
-    }
-
-    public void setManaMaximo(int manaMaximo) {
-        this.manaMaximo = manaMaximo;
-    }
-
-    // toString sobrescrito: reutiliza el de Personaje con super.toString()
+    // toString sobrescrito: reutiliza el de PersonajeMagico (que a su vez reutiliza el de Personaje)
+    // y añade la información propia del Hechicero
     @Override
     public String toString() {
-        return super.toString() + " | Mana: " + mana + "/" + manaMaximo;
+        return super.toString() + " | Poder Oscuro: " + poderOscuro;
     }
 }
