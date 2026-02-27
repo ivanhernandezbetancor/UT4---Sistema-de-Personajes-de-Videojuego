@@ -2,7 +2,7 @@ package rpg.model;
 
 import rpg.interfaces.Defendible;
 
-public class Guerrero extends PersonajeFisico implements Defendible{
+public class Guerrero extends PersonajeFisico implements Defendible {
 
     private int escudo;
     private int rabia;
@@ -21,12 +21,11 @@ public class Guerrero extends PersonajeFisico implements Defendible{
         cargarAtaque();
         int danio = golpeBasico();
 
-        System.out.println(getNombre() + " golpea a " + objetivo.getNombre() + " causando " + danio + " de daño ");
+        System.out.println(getNombre() + " golpea a " + objetivo.getNombre() + " causando " + danio + " de daño");
 
         objetivo.recibirDanio(danio);
 
         // El guerrero gana rabia al atacar
-        
         rabia = Math.min(100, rabia + 10);
     }
 
@@ -44,24 +43,16 @@ public class Guerrero extends PersonajeFisico implements Defendible{
         }
     }
 
-    // Implementación de la interfaz Defendible
-    @Override
-    public void defender() {
-        System.out.println(getNombre() + " levanta su escudo para defenderse");
-    }
-
     @Override
     public int reducirDanio(int danioEntrante) {
-
-        int reducido = danioEntrante - escudo;
-
-        if (reducido < 0) {
-            reducido = 0;
-        }
-
-        System.out.println(getNombre() + " bloquea parte del daño con su escudo");
-
+        int reducido = danioEntrante - (escudo / 2);
         return reducido;
+    }
+
+    // Metodo de defensa del Guerrero
+    public void defender() {
+        escudo += 5;
+        System.out.println(getNombre() + " se pone en posición defensiva. Escudo actual: " + escudo);
     }
 
     // Getters
@@ -73,6 +64,7 @@ public class Guerrero extends PersonajeFisico implements Defendible{
         return rabia;
     }
 
-} 
 
+
+}
 
