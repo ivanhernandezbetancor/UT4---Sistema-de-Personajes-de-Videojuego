@@ -1,6 +1,6 @@
 package rpg.model;
 
-//Subclase abstracta intermedia para personajes mágicos.
+//Subclase abstracta intermedia para personajes mágicos
 public abstract class PersonajeMagico extends Personaje {
 
     private int mana;
