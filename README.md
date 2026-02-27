@@ -25,7 +25,11 @@
 
 ## Izan 
 
--
+- model : PersonajeMagico.java
+- model : Mago.java
+- model : Clerigo.java
+- interfaces : Curable.java
+- interfaces : Magico.java
 
 ## Miguel
 
