@@ -1,7 +1,6 @@
 package rpg.model;
 
 // Clase abstracta que agrupa a todos los personajes físicos.
-
 public abstract class PersonajeFisico extends Personaje {
     
     private int fuerza;
@@ -9,7 +8,6 @@ public abstract class PersonajeFisico extends Personaje {
     private boolean cargando;
 
     // Constructor.
-    
     public PersonajeFisico(String nombre, int nivel, int saludMaxima, int fuerza, int armadura) {
         super(nombre, nivel, saludMaxima);
 
@@ -19,7 +17,6 @@ public abstract class PersonajeFisico extends Personaje {
     }
 
     // Método compartido para preparar un ataque más potente (el siguiente golpe hará doble daño).
-
     public void cargarAtaque() {
         this.cargando = true;
         System.out.println(getNombre() + " carga un potente ataque físico...");
@@ -27,7 +24,6 @@ public abstract class PersonajeFisico extends Personaje {
 
     // Método común que calcula el daño.
     // Si el personaje estaba cargando, el daño se duplica.
-
     public int golpeBasico() {
         int danio = fuerza + (int)(Math.random() * 10);
         if (cargando) {
@@ -39,7 +35,6 @@ public abstract class PersonajeFisico extends Personaje {
     }
 
     // Getters y setters
-
     public int getFuerza() { 
         return fuerza; 
     }
